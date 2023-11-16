@@ -65,6 +65,16 @@ router.delete("/:id", (req, res) => {
   return res.status(200).send(genre);
 });
 
+// get a genre with an id
+router.get("/:id", (req, res) => {
+  const genre = genres.find((g) => g.id === parseInt(req.params.id));
+  if (!genre)
+    return res
+      .status(404)
+      .send("The Genre you are looking to delete not found in the system");
+  res.send(genre);
+});
+
 // validation logic
 const ValidateInput = (body) => {
   const schema = Joi.object({
