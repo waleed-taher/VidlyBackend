@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+console.log("dotenv configured");
 import express from "express";
 import { genresRouter } from "./routes/genres.mjs";
 const app = express();
