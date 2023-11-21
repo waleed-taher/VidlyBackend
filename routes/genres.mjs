@@ -1,10 +1,8 @@
 import express from "express";
 import Joi from "joi";
-import { Genre, connectToDatabase } from "../db/genresdb.mjs";
+import { Genre } from "../db/genresdb.mjs";
 
 const router = express.Router();
-
-connectToDatabase();
 
 // creating a genre and saving to db
 router.post("/", (req, res) => {
@@ -16,7 +14,7 @@ router.post("/", (req, res) => {
   });
   const createGenre = async () => {
     try {
-      const isPresent = Genre.find({ name: req.body.name });
+      const isPresent = (await Genre.findOne({ name: req.body.name })) !== null;
       if (!isPresent) {
         const result = await genre.save();
         return res.status(201).send(result);
@@ -52,6 +50,9 @@ router.get("/:id", (req, res) => {
   const findGenreById = async () => {
     try {
       const result = await Genre.findById(id);
+      if (!result) {
+        return res.status(404).send("Id does not exists in the system");
+      }
       return res.status(200).send(result);
     } catch (error) {
       throw error;

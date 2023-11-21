@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 let isConnected = false;
 let db;
 const MONGOURL = process.env.MONGO_URL;
-console.log(MONGOURL);
 export async function connectToDatabase() {
   if (isConnected) {
     console.log("Database Already Connected");
@@ -20,7 +19,7 @@ export async function connectToDatabase() {
   }
 }
 
-const genreSchema = mongoose.Schema({
+export const genreSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please provide a Genre Name"],
